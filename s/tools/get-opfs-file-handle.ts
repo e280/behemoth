@@ -1,5 +1,5 @@
 
-export async function get_opfs_file_handle(
+export async function getOpfsFileHandle(
 		directory: FileSystemDirectoryHandle,
 		name: string,
 	) {

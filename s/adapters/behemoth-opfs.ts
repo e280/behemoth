@@ -2,7 +2,7 @@
 import {Hash} from "../core/types.js"
 import {Behemoth} from "../core/behemoth.js"
 import {smartHash} from "../tools/smart-hash.js"
-import {get_opfs_file_handle} from "../tools/get_opfs_file_handle.js"
+import {getOpfsFileHandle} from "../tools/get-opfs-file-handle.js"
 
 export class BehemothOpfs extends Behemoth {
 	#directory: FileSystemDirectoryHandle
@@ -13,7 +13,7 @@ export class BehemothOpfs extends Behemoth {
 	}
 
 	async has(hash: Hash) {
-		return !!await get_opfs_file_handle(this.#directory, hash)
+		return !!await getOpfsFileHandle(this.#directory, hash)
 	}
 
 	async set(blob: Blob) {
@@ -38,7 +38,7 @@ export class BehemothOpfs extends Behemoth {
 	}
 
 	async get(hash: Hash) {
-		const handle = await get_opfs_file_handle(this.#directory, hash)
+		const handle = await getOpfsFileHandle(this.#directory, hash)
 		return handle?.getFile()
 	}
 }
