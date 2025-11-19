@@ -3,10 +3,11 @@ import path from "node:path"
 import fs from "node:fs/promises"
 
 import {Behemoth} from "../core/behemoth.js"
-import {hashBlob} from "../core/tools/hash-blob.js"
+import {readBlob} from "../core/tools/readers.js"
 import {Hash, SetOptions} from "../core/types.js"
+import {hashBlob} from "../core/tools/hash-blob.js"
+import {writeToFile} from "./utils/write-to-file.js"
 import {progression} from "../core/utils/progression.js"
-import {writeBlobToFile} from "./utils/write-blob-to-file.js"
 
 export class BehemothDisk extends Behemoth {
 	static async directory(path: string) {
@@ -42,7 +43,7 @@ export class BehemothDisk extends Behemoth {
 		const hash = await hashBlob(blob, progress.hashing)
 
 		if (!await this.has(hash))
-			await writeBlobToFile(this.#path(hash), blob, progress.storing)
+			await writeToFile(this.#path(hash), readBlob(blob), progress.storing)
 
 		progress.done()
 		return hash

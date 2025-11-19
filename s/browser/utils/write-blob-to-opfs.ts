@@ -1,5 +1,5 @@
 
-import {chunks} from "../../core/tools/chunks.js"
+import {readBlob} from "../../core/tools/readers.js"
 import {Hash} from "../../core/types.js"
 
 export async function writeBlobToOpfs(
@@ -15,7 +15,7 @@ export async function writeBlobToOpfs(
 	const handle = await directory.getFileHandle(hash, {create: true})
 	const writable = await handle.createWritable()
 
-	for await (const chunk of chunks(blob)) {
+	for await (const chunk of readBlob(blob)) {
 		await writable.write(chunk as FileSystemWriteChunkType)
 		stored += chunk.length
 		onProgress(stored)

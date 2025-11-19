@@ -1,7 +1,7 @@
 
 import {Behemoth} from "../core/behemoth.js"
-import {hashBlob} from "../core/tools/hash-blob.js"
 import {Hash, SetOptions} from "../core/types.js"
+import {hashBlob} from "../core/tools/hash-blob.js"
 import {progression} from "../core/utils/progression.js"
 import {writeBlobToOpfs} from "./utils/write-blob-to-opfs.js"
 import {getOpfsFileHandle} from "./utils/get-opfs-file-handle.js"
