@@ -5,6 +5,7 @@ import fs from "node:fs/promises"
 import {Hash} from "../../core/types.js"
 import {Behemoth} from "../../core/behemoth.js"
 import {smartHash} from "../../tools/smart-hash.js"
+import { writeBlobToFile } from "../../tools/write-blob-to-file.js"
 
 export class BehemothDisk extends Behemoth {
 	static async make(dirpath: string) {
@@ -34,10 +35,7 @@ export class BehemothDisk extends Behemoth {
 
 	async set(blob: Blob) {
 		const hash = await smartHash(blob)
-		if (!await this.has(hash)) {
-			const buffer = Buffer.from(await blob.arrayBuffer())
-			await fs.writeFile(this.#path(hash), buffer)
-		}
+		if (!await this.has(hash)) await writeBlobToFile(this.#path(hash), blob)
 		return hash
 	}
 
