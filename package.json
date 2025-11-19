@@ -25,6 +25,10 @@
 		"_clean": "rm -rf x yard && mkdir x yard",
 		"_tsc": "tsc"
 	},
+	"dependencies": {
+		"@e280/stz": "^0.2.14",
+		"@noble/hashes": "^2.0.1"
+	},
 	"devDependencies": {
 		"@e280/science": "^0.1.1",
 		"@e280/scute": "^0.1.2",
@@ -44,9 +48,5 @@
 	},
 	"bugs": {
 		"url": "https://github.com/e280/behemoth/issues"
-	},
-	"dependencies": {
-		"@e280/stz": "^0.2.14",
-		"@noble/hashes": "^2.0.1"
 	}
 }
