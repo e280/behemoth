@@ -17,7 +17,7 @@
 **Behemoth**
 - **`.has(hash: Hash): Promise<boolean>`**
     ```ts
-    await behemoth.has(hash)
+    const exists = await behemoth.has(hash)
     ```
 - **`.require(hash: Hash): Promise<Blob>`**
     ```ts
