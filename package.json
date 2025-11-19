@@ -1,6 +1,6 @@
 {
 	"name": "@e280/behemoth",
-	"version": "0.1.0-0",
+	"version": "0.1.0-1",
 	"description": "hashed blob storage",
 	"license": "MIT",
 	"author": "Chase Moskal <chasemoskal@gmail.com>",
