@@ -19,7 +19,7 @@ await Science.run({
 
 	"BehemothDisk (node)": suite({
 		"set+get": test(async() => {
-			const behemoth = await BehemothDisk.make("./yard")
+			const behemoth = await BehemothDisk.directory("./yard")
 			const alpha = new Uint8Array([0xDE, 0xAD, 0xBE, 0xEF])
 			const hash = await behemoth.set(new Blob([alpha]))
 			const bravo1 = await behemoth.require(hash)

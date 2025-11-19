@@ -1,7 +1,7 @@
 {
 	"name": "@e280/behemoth",
 	"version": "0.1.0-0",
-	"description": "content-addressable blob storage",
+	"description": "hashed blob storage",
 	"license": "MIT",
 	"author": "Chase Moskal <chasemoskal@gmail.com>",
 	"type": "module",

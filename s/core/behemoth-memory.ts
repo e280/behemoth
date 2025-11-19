@@ -2,7 +2,7 @@
 import {GMap} from "@e280/stz"
 import {Behemoth} from "./behemoth.js"
 import {SetOptions, Hash} from "./types.js"
-import {smartHash} from "./tools/smart-hash.js"
+import {hashBlob} from "./tools/hash-blob.js"
 import {progression} from "./utils/progression.js"
 
 export class BehemothMemory extends Behemoth {
@@ -24,7 +24,7 @@ export class BehemothMemory extends Behemoth {
 		const progress = progression(blob.size, o?.onProgress)
 		progress.start()
 
-		const hash = await smartHash(blob, progress.hashing)
+		const hash = await hashBlob(blob, progress.hashing)
 
 		if (!await this.has(hash))
 			this.#map.set(hash, blob)

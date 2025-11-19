@@ -3,15 +3,15 @@ import path from "node:path"
 import fs from "node:fs/promises"
 
 import {Behemoth} from "../core/behemoth.js"
-import {smartHash} from "../core/tools/smart-hash.js"
+import {hashBlob} from "../core/tools/hash-blob.js"
 import {Hash, SetOptions} from "../core/types.js"
 import {progression} from "../core/utils/progression.js"
 import {writeBlobToFile} from "./utils/write-blob-to-file.js"
 
 export class BehemothDisk extends Behemoth {
-	static async make(dirpath: string) {
-		await fs.mkdir(dirpath, {recursive: true})
-		return new this(dirpath)
+	static async directory(path: string) {
+		await fs.mkdir(path, {recursive: true})
+		return new this(path)
 	}
 
 	#dirpath: string
@@ -39,7 +39,7 @@ export class BehemothDisk extends Behemoth {
 		const progress = progression(blob.size, o?.onProgress)
 		progress.start()
 
-		const hash = await smartHash(blob, progress.hashing)
+		const hash = await hashBlob(blob, progress.hashing)
 
 		if (!await this.has(hash))
 			await writeBlobToFile(this.#path(hash), blob, progress.storing)
