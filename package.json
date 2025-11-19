@@ -1,0 +1,50 @@
+{
+	"name": "@e280/behemoth",
+	"version": "0.1.0-0",
+	"description": "content-addressable blob storage",
+	"license": "MIT",
+	"author": "Chase Moskal <chasemoskal@gmail.com>",
+	"type": "module",
+	"sideEffects": false,
+	"main": "./x/index.js",
+	"files": [
+		"x",
+		"s"
+	],
+	"exports": {
+		".": "./x/index.js"
+	},
+	"scripts": {
+		"build": "run-s _clean _tsc",
+		"start": "octo 'tsc -w' 'node --watch x/tests.test.js'",
+		"count": "find s -path '*/_archive' -prune -o -name '*.ts' -exec wc -l {} +",
+		"test": "node x/tests.test.js",
+		"test-debug": "node inspect x/tests.test.js",
+		"_clean": "rm -rf x && mkdir x",
+		"_tsc": "tsc",
+	},
+	"devDependencies": {
+		"@e280/science": "^0.1.1",
+		"@e280/scute": "^0.1.2",
+		"@types/node": "^24.3.0",
+		"npm-run-all": "^4.1.5",
+		"typescript": "^5.9.2"
+	},
+	"keywords": [
+		"content-addressable",
+		"hash storage",
+		"storage"
+	],
+	"homepage": "https://github.com/e280/behemoth#readme",
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/e280/behemoth.git"
+	},
+	"bugs": {
+		"url": "https://github.com/e280/behemoth/issues"
+	},
+	"dependencies": {
+		"@e280/stz": "^0.2.14",
+		"@noble/hashes": "^2.0.1"
+	}
+}
