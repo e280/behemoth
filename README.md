@@ -1,5 +1,5 @@
 
-<div align="center"><img alt="" src="https://i.imgur.com/tqdllUN.png"/></div>
+![](https://i.imgur.com/tqdllUN.png)
 
 # ***BEHEMOTH***
 > *hashed blob storage. on opfs. in memory. on disk. in orbit.*
@@ -84,6 +84,7 @@ const behemoth = new BehemothMemory()
 <br/>
 
 ### 🐉 tools
+> *handy tools you might wanna use*
 
 - **`hashBlob(blob: Blob, onProgress: (hashed: number) => void): Promise<Hash>`**
   ```ts
@@ -94,9 +95,14 @@ const behemoth = new BehemothMemory()
     console.log(`bytes hashed: ${hashed}`)
   })
   ```
-- **`chunks(blob: Blob): AsyncGenerator<Uint8Array>`**
+- **`readBlob(blob: Blob): AsyncGenerator<Uint8Array>`**
   ```ts
-  for await (const chunk of chunks(blob))
+  for await (const chunk of readBlob(blob))
+    chunk
+  ```
+- **`readStream(stream: ReadableStream<Uint8Array>): AsyncGenerator<Uint8Array>`**
+  ```ts
+  for await (const chunk of readStream(stream))
     chunk
   ```
 
