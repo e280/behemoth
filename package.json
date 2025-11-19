@@ -12,7 +12,8 @@
 		"s"
 	],
 	"exports": {
-		".": "./x/index.js"
+		".": "./x/index.js",
+		"./node": "./x/index.node.js"
 	},
 	"scripts": {
 		"build": "run-s _clean _tsc",
@@ -21,7 +22,7 @@
 		"test": "node x/tests.test.js",
 		"test-debug": "node inspect x/tests.test.js",
 		"_clean": "rm -rf x && mkdir x",
-		"_tsc": "tsc",
+		"_tsc": "tsc"
 	},
 	"devDependencies": {
 		"@e280/science": "^0.1.1",
