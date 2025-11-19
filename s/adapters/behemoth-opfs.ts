@@ -1,7 +1,9 @@
 
-import {Hash} from "../core/types.js"
 import {Behemoth} from "../core/behemoth.js"
 import {smartHash} from "../tools/smart-hash.js"
+import {Hash, SetOptions} from "../core/types.js"
+import {progression} from "../tools/progress-helpers.js"
+import {writeBlobToOpfs} from "../tools/write-blob-to-opfs.js"
 import {getOpfsFileHandle} from "../tools/get-opfs-file-handle.js"
 
 export class BehemothOpfs extends Behemoth {
@@ -16,22 +18,6 @@ export class BehemothOpfs extends Behemoth {
 		return !!await getOpfsFileHandle(this.#directory, hash)
 	}
 
-	async set(blob: Blob) {
-		const hash = await smartHash(blob)
-		const exists = await this.has(hash)
-		if (!exists) {
-			const handle = await this.#directory.getFileHandle(hash, {create: true})
-			const writable = await handle.createWritable()
-			await writable.write(blob)
-			await writable.close()
-		}
-		return hash
-	}
-
-	async delete(hash: Hash) {
-		await this.#directory.removeEntry(hash)
-	}
-
 	async require(hash: Hash) {
 		const handle = await this.#directory.getFileHandle(hash)
 		return handle.getFile()
@@ -40,6 +26,23 @@ export class BehemothOpfs extends Behemoth {
 	async get(hash: Hash) {
 		const handle = await getOpfsFileHandle(this.#directory, hash)
 		return handle?.getFile()
+	}
+
+	async set(blob: Blob, o?: SetOptions) {
+		const progress = progression(blob.size, o?.onProgress)
+		progress.start()
+
+		const hash = await smartHash(blob, progress.hashing)
+
+		if (!await this.has(hash))
+			await writeBlobToOpfs(blob, this.#directory, hash, progress.storing)
+
+		progress.done()
+		return hash
+	}
+
+	async delete(hash: Hash) {
+		await this.#directory.removeEntry(hash)
 	}
 }
 

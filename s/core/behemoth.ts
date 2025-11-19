@@ -1,11 +1,11 @@
 
-import {Hash} from "./types.js"
+import {SetOptions, Hash} from "./types.js"
 
 export abstract class Behemoth {
 	abstract has(hash: Hash): Promise<boolean>
-	abstract set(blob: Blob): Promise<Hash>
-	abstract get(hash: Hash): Promise<Blob | undefined>
-	abstract delete(hash: Hash): Promise<void>
 	abstract require(hash: Hash): Promise<Blob>
+	abstract get(hash: Hash): Promise<Blob | undefined>
+	abstract set(blob: Blob, o?: SetOptions): Promise<Hash>
+	abstract delete(hash: Hash): Promise<void>
 }
 
