@@ -1,6 +1,6 @@
 
 import fs from "node:fs/promises"
-import {chunks} from "./chunks.js"
+import {chunks} from "../../core/tools/chunks.js"
 
 /** stream a blob to disk without materializing it as a single buffer */
 export async function writeBlobToFile(filepath: string, blob: Blob, onProgress: (n: number) => void) {

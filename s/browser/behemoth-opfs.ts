@@ -1,10 +1,10 @@
 
 import {Behemoth} from "../core/behemoth.js"
-import {smartHash} from "../tools/smart-hash.js"
+import {smartHash} from "../core/tools/smart-hash.js"
 import {Hash, SetOptions} from "../core/types.js"
-import {progression} from "../tools/progress-helpers.js"
-import {writeBlobToOpfs} from "../tools/write-blob-to-opfs.js"
-import {getOpfsFileHandle} from "../tools/get-opfs-file-handle.js"
+import {progression} from "../core/utils/progression.js"
+import {writeBlobToOpfs} from "./utils/write-blob-to-opfs.js"
+import {getOpfsFileHandle} from "./utils/get-opfs-file-handle.js"
 
 export class BehemothOpfs extends Behemoth {
 	#directory: FileSystemDirectoryHandle

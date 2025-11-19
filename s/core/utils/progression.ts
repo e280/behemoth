@@ -1,5 +1,5 @@
 
-import {SetProgress} from "../core/types.js"
+import {SetProgress} from "../types.js"
 
 export const progression = (size: number, onProgress: (p: SetProgress) => void = () => {}) => ({
 	start: () => onProgress({

@@ -12,8 +12,9 @@
 		"s"
 	],
 	"exports": {
-		".": "./x/index.js",
-		"./node": "./x/index.node.js"
+		".": "./x/browser/index.js",
+		"./core": "./x/core/index.js",
+		"./node": "./x/node/index.js"
 	},
 	"scripts": {
 		"build": "run-s _clean _tsc",

@@ -1,9 +1,9 @@
 
 import {GMap} from "@e280/stz"
-import {Behemoth} from "../core/behemoth.js"
-import {SetOptions, Hash} from "../core/types.js"
-import {smartHash} from "../tools/smart-hash.js"
-import {progression} from "../tools/progress-helpers.js"
+import {Behemoth} from "./behemoth.js"
+import {SetOptions, Hash} from "./types.js"
+import {smartHash} from "./tools/smart-hash.js"
+import {progression} from "./utils/progression.js"
 
 export class BehemothMemory extends Behemoth {
 	#map = new GMap<Hash, Blob>()

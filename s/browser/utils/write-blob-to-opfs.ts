@@ -1,6 +1,6 @@
 
-import {chunks} from "./chunks.js"
-import {Hash} from "../core/types.js"
+import {chunks} from "../../core/tools/chunks.js"
+import {Hash} from "../../core/types.js"
 
 export async function writeBlobToOpfs(
 		blob: Blob,

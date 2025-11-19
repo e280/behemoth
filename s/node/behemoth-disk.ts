@@ -2,11 +2,11 @@
 import path from "node:path"
 import fs from "node:fs/promises"
 
-import {Behemoth} from "../../core/behemoth.js"
-import {smartHash} from "../../tools/smart-hash.js"
-import {Hash, SetOptions} from "../../core/types.js"
-import {progression} from "../../tools/progress-helpers.js"
-import {writeBlobToFile} from "../../tools/write-blob-to-file.js"
+import {Behemoth} from "../core/behemoth.js"
+import {smartHash} from "../core/tools/smart-hash.js"
+import {Hash, SetOptions} from "../core/types.js"
+import {progression} from "../core/utils/progression.js"
+import {writeBlobToFile} from "./utils/write-blob-to-file.js"
 
 export class BehemothDisk extends Behemoth {
 	static async make(dirpath: string) {
