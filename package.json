@@ -22,7 +22,7 @@
 		"count": "find s -path '*/_archive' -prune -o -name '*.ts' -exec wc -l {} +",
 		"test": "node x/tests.test.js",
 		"test-debug": "node inspect x/tests.test.js",
-		"_clean": "rm -rf x && mkdir x",
+		"_clean": "rm -rf x yard && mkdir x yard",
 		"_tsc": "tsc"
 	},
 	"devDependencies": {
