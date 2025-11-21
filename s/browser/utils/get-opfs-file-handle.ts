@@ -5,7 +5,7 @@ export async function getOpfsFileHandle(
 	) {
 
 	try {
-		return directory.getFileHandle(name)
+		return await directory.getFileHandle(name)
 	}
 	catch (error) {
 		if (error instanceof Error && error.name === "NotFoundError")
