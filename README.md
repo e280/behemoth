@@ -7,6 +7,9 @@
 - 🗿 **behemoth stores binary data, anywhere.**
 - 🔒 content-addressable -- sha256 hashes for identity (never store a dupe)
 - 🔮 blob-oriented -- blobs provide random-access and are generally super cool
+- 🏞️ stream-oriented -- streams allow you to upload/download big stuff smoothly
+- ♻️ isomorphic -- runs in browsers or node
+- 🛰️ remote -- *(coming soon)* connect to a remote behemoth api service
 
 
 <br/>
