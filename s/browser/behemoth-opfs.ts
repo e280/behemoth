@@ -47,9 +47,16 @@ export class BehemothOpfs extends Behemoth {
 	}
 
 	async delete(...hashes: Hash[]) {
-		await Promise.all(
-			hashes.map(hash => this.#directory.removeEntry(hash))
-		)
+		await Promise.all(hashes.map(async hash => {
+			try {
+				await this.#directory.removeEntry(hash)
+			}
+			catch (error) {
+				if (error instanceof Error && error.name === "NotFoundError")
+					return
+				throw error
+			}
+		}))
 	}
 }
 

@@ -1,6 +1,6 @@
 
-import {readBlob} from "../../core/tools/readers.js"
 import {Hash} from "../../core/types.js"
+import {readBlob} from "../../core/tools/readers.js"
 
 export async function writeBlobToOpfs(
 		blob: Blob,
