@@ -7,7 +7,7 @@ import {writeBlobToOpfs} from "./utils/write-blob-to-opfs.js"
 import {getOpfsFileHandle} from "./utils/get-opfs-file-handle.js"
 
 export class BehemothOpfs extends Behemoth {
-	static async directory(name: string) {
+	static async mkdir(name: string) {
 		const root = await navigator.storage.getDirectory()
 		const directory = await root.getDirectoryHandle(name, {create: true})
 		return new this(directory)
@@ -35,13 +35,12 @@ export class BehemothOpfs extends Behemoth {
 	}
 
 	async set(blob: Blob, o?: SetOptions) {
-		const progress = progression(blob.size, o?.onProgress)
-		progress.start()
+		const progress = progression(blob.size * 2, o?.onProgress)
 
-		const hash = await hashBlob(blob, progress.hashing)
+		const hash = await hashBlob(blob, progress.add)
 
 		if (!await this.has(hash))
-			await writeBlobToOpfs(blob, this.#directory, hash, progress.storing)
+			await writeBlobToOpfs(blob, this.#directory, hash, progress.add)
 
 		progress.done()
 		return hash

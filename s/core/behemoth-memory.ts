@@ -21,10 +21,9 @@ export class BehemothMemory extends Behemoth {
 	}
 
 	async set(blob: Blob, o?: SetOptions) {
-		const progress = progression(blob.size, o?.onProgress)
-		progress.start()
+		const progress = progression(blob.size * 2, o?.onProgress)
 
-		const hash = await hashBlob(blob, progress.hashing)
+		const hash = await hashBlob(blob, progress.add)
 
 		if (!await this.has(hash))
 			this.#map.set(hash, blob)

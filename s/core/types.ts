@@ -8,22 +8,16 @@ export type Flow = (
 	| ReadableStream<Uint8Array>
 )
 
-export type SetProgress = {
+export type Progress = {
 
-	/** the current progress phase of the operation */
-	phase: "hashing" | "storing" | "done"
+	/** total amount of work */
+	total: number
 
-	/** how many bytes in the payload */
-	size: number
-
-	/** how many bytes have been hashed */
-	hashed: number
-
-	/** how many bytes have been written */
-	stored: number
+	/** amount of work that is completed */
+	done: number
 }
 
 export type SetOptions = {
-	onProgress?: (progress: SetProgress) => void
+	onProgress?: (progress: Progress) => void
 }
 

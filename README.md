@@ -35,12 +35,12 @@
     const hash = await behemoth.set(blob)
     ```
     ```ts
-    const hash = await behemoth.set(blob, {onProgress: progress => {
-      progress.phase // "hashing" | "storing"
-      progress.size // number of bytes in this blob
-      progress.hashed // how many bytes have been hashed
-      progress.stored // how many bytes have been stored
-    }})
+    const hash = await behemoth.set(blob, {
+      onProgress: progress => {
+        progress.total // number, total amount of work
+        progress.done // number, amount of work completed
+      },
+    })
     ```
 - **`.delete(...hashes: Hash[]): Promise<void>`**
     ```ts
@@ -56,7 +56,7 @@
 ```ts
 import {BehemothOpfs} from "@e280/behemoth"
 
-const behemoth = await BehemothOpfs.directory("my-data")
+const behemoth = await BehemothOpfs.mkdir("my-data")
 ```
 
 
@@ -69,7 +69,7 @@ const behemoth = await BehemothOpfs.directory("my-data")
 import {BehemothDisk} from "@e280/behemoth/node"
  //                                         👆
 
-const behemoth = await BehemothDisk.directory("./my-data")
+const behemoth = await BehemothDisk.mkdir("./my-data")
 ```
 
 

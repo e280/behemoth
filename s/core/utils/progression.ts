@@ -1,33 +1,23 @@
 
-import {SetProgress} from "../types.js"
+import {Progress} from "../types.js"
 
-export const progression = (size: number, onProgress: (p: SetProgress) => void = () => {}) => ({
-	start: () => onProgress({
-		phase: "hashing",
-		size,
-		hashed: 0,
-		stored: 0,
-	}),
+export const progression = (
+		total: number,
+		onProgress: ((p: Progress) => void) = (() => {}),
+	) => {
 
-	hashing: (hashed: number) => onProgress({
-		phase: "hashing",
-		size,
-		hashed,
-		stored: 0,
-	}),
+	let done = 0
+	onProgress({total, done})
 
-	storing: (stored: number) => onProgress({
-		phase: "storing",
-		size,
-		hashed: size,
-		stored,
-	}),
+	return {
+		add: (n: number) => {
+			done += n
+			onProgress({total, done})
+		},
 
-	done: () => onProgress({
-		phase: "done",
-		size,
-		hashed: size,
-		stored: size,
-	}),
-})
+		done: () => {
+			onProgress({total, done: total})
+		},
+	}
+}
 
