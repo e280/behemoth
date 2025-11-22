@@ -33,8 +33,9 @@ export class BehemothMemory extends Behemoth {
 		return hash
 	}
 
-	async delete(hash: Hash) {
-		this.#map.delete(hash)
+	async delete(...hashes: Hash[]) {
+		for (const hash of hashes)
+			this.#map.delete(hash)
 	}
 }
 

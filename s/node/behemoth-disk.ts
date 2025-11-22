@@ -49,9 +49,11 @@ export class BehemothDisk extends Behemoth {
 		return hash
 	}
 
-	async delete(hash: Hash) {
+	async delete(...hashes: Hash[]) {
 		try {
-			await fs.unlink(this.#path(hash))
+			await Promise.all(
+				hashes.map(hash => fs.unlink(this.#path(hash)))
+			)
 		}
 		catch (err: any) {
 			if (err?.code !== "ENOENT") throw err

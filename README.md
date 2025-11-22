@@ -42,7 +42,7 @@
       progress.stored // how many bytes have been stored
     }})
     ```
-- **`.delete(hash: Hash): Promise<void>`**
+- **`.delete(...hashes: Hash[]): Promise<void>`**
     ```ts
     await behemoth.delete(hash)
     ```
