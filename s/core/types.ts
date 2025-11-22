@@ -2,10 +2,10 @@
 export type Hash = string
 
 export type Flow = (
-	Blob |
-	Iterable<Uint8Array> |
-	AsyncIterable<Uint8Array> |
-	ReadableStream<Uint8Array>
+	| Blob
+	| Iterable<Uint8Array>
+	| AsyncIterable<Uint8Array>
+	| ReadableStream<Uint8Array>
 )
 
 export type SetProgress = {
