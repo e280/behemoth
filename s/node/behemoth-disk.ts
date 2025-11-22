@@ -7,7 +7,7 @@ import {readBlob} from "../core/tools/readers.js"
 import {Hash, SetOptions} from "../core/types.js"
 import {hashBlob} from "../core/tools/hash-blob.js"
 import {writeToFile} from "./utils/write-to-file.js"
-import {progression} from "../core/utils/progression.js"
+import {Progression} from "../core/utils/progression.js"
 
 export class BehemothDisk extends Behemoth {
 	static async mkdir(path: string) {
@@ -37,14 +37,14 @@ export class BehemothDisk extends Behemoth {
 	}
 
 	async set(blob: Blob, o?: SetOptions) {
-		const progress = progression(blob.size * 2, o?.onProgress)
+		const progress = Progression.blobStorage(blob.size, o?.onProgress)
 
-		const hash = await hashBlob(blob, progress.add)
+		const hash = await hashBlob(blob, progress.hashing.set)
 
 		if (!await this.has(hash))
-			await writeToFile(this.#path(hash), readBlob(blob), progress.add)
+			await writeToFile(this.#path(hash), readBlob(blob), progress.storing.set)
 
-		progress.done()
+		progress.finish()
 		return hash
 	}
 

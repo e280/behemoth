@@ -3,7 +3,7 @@ import {GMap} from "@e280/stz"
 import {Behemoth} from "./behemoth.js"
 import {SetOptions, Hash} from "./types.js"
 import {hashBlob} from "./tools/hash-blob.js"
-import {progression} from "./utils/progression.js"
+import {Progression} from "./utils/progression.js"
 
 export class BehemothMemory extends Behemoth {
 	#map = new GMap<Hash, Blob>()
@@ -21,14 +21,14 @@ export class BehemothMemory extends Behemoth {
 	}
 
 	async set(blob: Blob, o?: SetOptions) {
-		const progress = progression(blob.size * 2, o?.onProgress)
+		const progress = Progression.blobStorage(blob.size, o?.onProgress)
 
-		const hash = await hashBlob(blob, progress.add)
+		const hash = await hashBlob(blob, progress.hashing.set)
 
 		if (!await this.has(hash))
 			this.#map.set(hash, blob)
 
-		progress.done()
+		progress.finish()
 		return hash
 	}
 
