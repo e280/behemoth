@@ -1,29 +1,35 @@
 
+import {hex} from "@e280/stz"
 import path from "node:path"
 import fs from "node:fs/promises"
 
 import {Behemoth} from "../core/behemoth.js"
-import {readBlob} from "../core/tools/readers.js"
 import {Hash, SetOptions} from "../core/types.js"
-import {hashBlob} from "../core/tools/hash-blob.js"
-import {writeToFile} from "./utils/write-to-file.js"
-import {Progression} from "../core/utils/progression.js"
+import {progress} from "../core/tools/progress.js"
+import {hashAndWriteFile} from "./utils/hash-and-write.js"
 
 export class BehemothDisk extends Behemoth {
-	static async mkdir(path: string) {
-		await fs.mkdir(path, {recursive: true})
-		return new this(path)
+	static async mkdir(dir: string) {
+		const tempDir = path.join(dir, "temp")
+		await fs.mkdir(tempDir, {recursive: true})
+		return new this(dir, tempDir)
 	}
 
-	#dirpath: string
+	#directory: string
+	#tempDirectory: string
 
-	constructor(dirpath: string) {
+	constructor(directory: string, tempDirectory: string) {
 		super()
-		this.#dirpath = dirpath
+		this.#directory = directory
+		this.#tempDirectory = tempDirectory
 	}
 
 	#path(hash: Hash) {
-		return path.join(this.#dirpath, hash)
+		return path.join(this.#directory, hash)
+	}
+
+	#pathTemp(name: string) {
+		return path.join(this.#tempDirectory, name)
 	}
 
 	async has(hash: Hash) {
@@ -37,14 +43,20 @@ export class BehemothDisk extends Behemoth {
 	}
 
 	async set(blob: Blob, o?: SetOptions) {
-		const progress = Progression.blobStorage(blob.size, o?.onProgress)
+		const tempId = hex.random()
+		const tempPath = this.#pathTemp(tempId)
 
-		const hash = await hashBlob(blob, progress.hashing.set)
+		const hash = await hashAndWriteFile(
+			blob,
+			tempPath,
+			progress(blob.size, o?.onProgress),
+		)
 
-		if (!await this.has(hash))
-			await writeToFile(this.#path(hash), readBlob(blob), progress.storing.set)
+		if (await this.has(hash))
+			await fs.rm(tempPath, {force: true})
+		else
+			await fs.rename(tempPath, this.#path(hash))
 
-		progress.finish()
 		return hash
 	}
 

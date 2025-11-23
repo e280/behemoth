@@ -2,7 +2,7 @@
 import {Behemoth} from "../core/behemoth.js"
 import {Hash, SetOptions} from "../core/types.js"
 import {hashBlob} from "../core/tools/hash-blob.js"
-import {Progression} from "../core/utils/progression.js"
+import {rateLimit} from "../core/tools/rate-limit.js"
 import {writeBlobToOpfs} from "./utils/write-blob-to-opfs.js"
 import {getOpfsFileHandle} from "./utils/get-opfs-file-handle.js"
 
@@ -35,14 +35,26 @@ export class BehemothOpfs extends Behemoth {
 	}
 
 	async set(blob: Blob, o?: SetOptions) {
-		const progress = Progression.blobStorage(blob.size, o?.onProgress)
+		const progress = {
+			hashing: 0,
+			storing: 0,
+			report: rateLimit(100, () => o?.onProgress?.({
+				total: blob.size * 2,
+				done: progress.hashing + progress.storing,
+			})),
+		}
 
-		const hash = await hashBlob(blob, progress.hashing.set)
+		const hash = await hashBlob(blob, done => {
+			progress.hashing = done
+			progress.report()
+		})
 
 		if (!await this.has(hash))
-			await writeBlobToOpfs(blob, this.#directory, hash, progress.storing.set)
+			await writeBlobToOpfs(blob, this.#directory, hash, done => {
+				progress.storing = done
+				progress.report()
+			})
 
-		progress.finish()
 		return hash
 	}
 
