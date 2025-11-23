@@ -26,7 +26,7 @@
 		"_tsc": "tsc"
 	},
 	"dependencies": {
-		"@e280/stz": "^0.2.14",
+		"@e280/stz": "^0.2.15",
 		"@noble/hashes": "^2.0.1"
 	},
 	"devDependencies": {
